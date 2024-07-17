@@ -1,23 +1,15 @@
 package com.springbootwithjasperreport.controller;
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.springbootwithjasperreport.model.Address;
 import com.springbootwithjasperreport.repository.AddressRepository;
 import com.springbootwithjasperreport.service.JReportService;
-
-import net.sf.jasperreports.engine.JRException;
 
 @RestController
 @CrossOrigin("*")
@@ -35,7 +27,22 @@ public class AddressController {
 	}
 
 	@GetMapping("/jasperpdf/export")
-	public void createPDF(HttpServletResponse response) throws IOException, JRException {
+	public ResponseEntity<Map<String, String>> getReport() {
+        try {
+            byte[] pdfBytes = service.generatePdfReport();
+            String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("pdf", base64Pdf);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+	
+	/*public void createPDF(HttpServletResponse response) throws IOException, JRException {
 		response.setContentType("application/pdf");
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
 		String currentDateTime = dateFormatter.format(new Date());
@@ -45,5 +52,5 @@ public class AddressController {
 		response.setHeader(headerKey, headerValue);
 
 		service.exportJasperReport(response);
-	}
+	}*/
 }
