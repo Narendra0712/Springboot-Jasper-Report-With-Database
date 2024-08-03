@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Address" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd26aef9-ed1b-4ae3-8f87-4ac03d00466c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Database Connection "/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DatabaseConncetion"/>
+	<parameter name="id" class="java.lang.Integer"/>
 	<queryString language="SQL">
-		<![CDATA[select id, firstname, lastname, street, city from address]]>
+		<![CDATA[select id, firstname, lastname, street, city from address where id= $P{id}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="city" class="java.lang.String"/>
